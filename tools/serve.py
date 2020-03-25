@@ -1,22 +1,16 @@
 import asyncio
 import io
+import logging
 from asyncio import Future
 from concurrent.futures.thread import ThreadPoolExecutor
 from typing import List
 
-import PIL
-import aiohttp
 import torch
 from PIL import Image
-from aiohttp import web, log
-
-import logging
-
+from aiohttp import web
 from detectron2.engine import default_argument_parser, DefaultPredictor
-from detectron2.modeling import build_model
 from pandas import np
-from torchvision import transforms
-from adet.checkpoint import AdetCheckpointer
+
 from tools.train_net import setup
 
 routes = web.RouteTableDef()
