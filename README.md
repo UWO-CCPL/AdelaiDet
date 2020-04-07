@@ -18,11 +18,19 @@ To date, AdelaiDet implements the following algorithms:
 
 More models will be released soon. Stay tuned.
 
-### COCO Object Detecton Baselines with FCOS
+### COCO Object Detecton Baselines with [FCOS](https://arxiv.org/abs/1904.01355)
 
-Name | box AP | download
---- |:---:|:---:
-[FCOS_R_50_1x](configs/FCOS-Detection/R_50_1x.yaml) | 38.7 | [model](https://cloudstor.aarnet.edu.au/plus/s/glqFc13cCoEyHYy/download)
+Name | inf. time (ms/im) | box AP | download
+--- |:---:|:---:|:---:
+[FCOS_R_50_1x](configs/FCOS-Detection/R_50_1x.yaml) | 60 | 38.7 | [model](https://cloudstor.aarnet.edu.au/plus/s/glqFc13cCoEyHYy/download)
+
+#### Real-time models
+
+Name | inf. time | box AP | download
+--- |:---:|:---:|:---:
+[FCOS_RT_DLA_34_4x](configs/FCOS-Detection/FCOS_RT/MS_DLA_34_4x_syncbn.yaml) | 46FPS | 40.3 | [model](https://cloudstor.aarnet.edu.au/plus/s/zNPNyTkizaOOsUQ/download)
+
+*Inference time is measured on a NVIDIA 1080Ti with batch size 1.*
 
 ## Installation
 
@@ -44,7 +52,7 @@ python setup.py build develop
 python demo/demo.py \
     --config-file configs/FCOS-Detection/R_50_1x.yaml \
     --input input1.jpg input2.jpg \
-	--opts MODEL.WEIGHTS fcos_R_50_1x.pth
+    --opts MODEL.WEIGHTS fcos_R_50_1x.pth
 ```
 
 ### Train Your Own Models
@@ -59,6 +67,16 @@ python tools/train_net.py \
     --config-file configs/FCOS-Detection/R_50_1x.yaml \
     --num-gpus 8 \
     OUTPUT_DIR training_dir/fcos_R_50_1x
+```
+To evaluate the model after training, run:
+
+```
+python tools/train_net.py \
+    --config-file configs/FCOS-Detection/R_50_1x.yaml \
+    --eval-only \
+    --num-gpus 8 \
+    OUTPUT_DIR training_dir/fcos_R_50_1x \
+    MODEL.WEIGHTS training_dir/fcos_R_50_1x/model_final.pth
 ```
 
 The configs are made for 8-GPU training. To train on another number of GPUs, change the `num-gpus`.
@@ -122,3 +140,5 @@ If you use this toolbox in your research or wish to refer to the baseline result
 ## License
 
 For academic use, this project is licensed under the 2-clause BSD License - see the LICENSE file for details. For commercial use, please contact [Chunhua Shen](https://cs.adelaide.edu.au/~chhshen/).
+
+
